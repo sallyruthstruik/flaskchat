@@ -1,6 +1,33 @@
 
 # Flask+websocket chat application
 
+## Installation
+
+Prerequisites:
+
+* MongoDB server
+* pipenv
+
+Install requirements:
+
+```
+pipenv install --dev
+```
+
+Run tests:
+
+```
+pipenv run pytest
+```
+
+Run server:
+
+```
+pipenv run python server.py
+```
+
+Server will be runned at 127.0.0.1:8000
+
 ## Changelog
 
 ### Version version-1
