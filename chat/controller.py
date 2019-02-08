@@ -19,10 +19,10 @@ def login(username):
 
 
 def new_message(message):
-    models.Message.create(message=message, user=current_user.id)
+    return models.Message.create(message=message, user=current_user.id)
 
 
 def history():
-    messages = models.Message.objects.order_by("-created").limit(50).fetch_users()
+    messages = models.Message.objects.order_by("-created").limit(20).fetch_users()
     return reversed(messages)
 

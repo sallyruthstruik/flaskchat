@@ -15,6 +15,9 @@ db = MongoEngine()
 class ModelMixin:
     created = me.DateTimeField(default=datetime.datetime.utcnow)
 
+    def to_dict(self):
+        return self.to_mongo()
+
     @classmethod
     def get(cls, **params):
         return cls.objects.get(**params)
@@ -77,5 +80,3 @@ class Message(me.Document,
     objects = MessageQSManager()
     user = me.LazyReferenceField(User)
     message = me.StringField(max_length=10000, min_length=1)
-
-

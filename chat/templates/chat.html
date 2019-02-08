@@ -1,16 +1,62 @@
 {% extends "layout.html" %}
 {% block content %}
+  <div id="vueapp">
+    {% raw %}
+    <p v-for="message in history"><bold>[{{message.created}}] {{message.user.username}} says: {{message.message}}</bold></p>
+    <br>
+    {% endraw %}
 
-  {% for message in messages %}
-    <p><bold>[{{message.created}}] {{message.user.fetch().username}} says: {{message.message}}</bold></p>
-  {% endfor %}
-  <br>
-  <form class="form form-inline" method="post">
     <div class="form-group">
-      <input class="form-control" placeholder="Message" name="message">
+      <input class="form-control" placeholder="Message" name="message" v-model="message"
+        v-on:keyup.enter="send()">
     </div>
     <div class="form-group">
-      <input class="btn btn-primary" type="submit" value="Отправить">
+      <button class="btn btn-primary" v-on:click="send()">Отправить</button>
     </div>
-  </form>
+  </div>
+{% endblock %}
+
+{% block javascript %}
+  <script>
+    var socket = io.connect('http://localhost:8000');
+    socket.on('connect', function() {
+        console.log('connected')
+        socket.emit('enter_room', {data: 'I\'m connected!'});
+    });
+
+    socket.on('error', function(err){
+        console.log('socket error', err)
+    })
+
+
+    var app = new Vue({
+        el: "#vueapp",
+        data: {
+            history: [],
+            message: "",
+        },
+
+        mounted(){
+            axios.get("/api/chat/history").then(resp=>{
+                console.log(resp.data)
+                this.history = resp.data;
+            })
+
+            let self = this;
+
+            socket.on('add_to_history', function(data){
+                data = JSON.parse(data);
+                console.log('add to history', data);
+                this.history.push(data);
+                this.message = null;
+            }.bind(this))
+        },
+
+        methods:{
+            send(){
+                socket.emit("new_message", this.message)
+            }
+        }
+    })
+  </script>
 {% endblock %}
