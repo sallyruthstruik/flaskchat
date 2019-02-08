@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block content %}
+
+  {% for message in messages %}
+    <p><bold>[{{message.created}}] {{message.user.fetch().username}} says: {{message.message}}</bold></p>
+  {% endfor %}
+  <br>
+  <form class="form form-inline" method="post">
+    <div class="form-group">
+      <input class="form-control" placeholder="Message" name="message">
+    </div>
+    <div class="form-group">
+      <input class="btn btn-primary" type="submit" value="Отправить">
+    </div>
+  </form>
+{% endblock %}
