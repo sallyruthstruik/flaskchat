@@ -40,3 +40,9 @@ Server will be runned at 127.0.0.1:8000
 * one room, no websockets, user can get history only by refreshing page
 
 
+### Version version-2
+
+* Added Flask-socketio and websockets support
+* Changed development server to socketio
+* New client with VueJS framework
+* Client now supports realtime updates

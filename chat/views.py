@@ -2,7 +2,7 @@ from flask.globals import request
 from flask.helpers import url_for
 from flask.templating import render_template
 from flask_login.utils import login_required
-from flask import globals as g, redirect
+from flask import globals as g, redirect, jsonify
 
 from chat import controller
 from chat.app import app
@@ -29,20 +29,21 @@ def login():
     return render_template("login.html", error=error)
 
 
-@app.route("/chat", methods=["GET", "POST"])
+@app.route("/chat", methods=["GET"])
 @login_required
 def chat():
-    error = None
+    return render_template("chat.html")
 
-    history = controller.history()
 
-    if request.method == "POST":
-        message = request.form["message"]
+@app.route("/api/chat/history")
+@login_required
+def api_chat_history():
+    data = []
 
-        try:
-            controller.new_message(message)
-            return redirect(url_for("chat"))
-        except ValidationError as e:
-            error = e
+    for h in controller.history():
+        item = h.to_dict()
+        # history calls fetch_users - so all users are prefetched
+        item["user"] = h.user.fetch().to_dict()
+        data.append(item)
 
-    return render_template("chat.html", error=error, messages=history)
+    return jsonify(data)

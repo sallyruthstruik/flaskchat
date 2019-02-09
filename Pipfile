@@ -9,6 +9,9 @@ pytest = "*"
 [packages]
 flask-mongoengine = "*"
 flask-login = "*"
+flask-socketio = "*"
+gevent = "*"
+gevent-websocket = "*"
 
 [requires]
 python_version = "3.6"
