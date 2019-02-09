@@ -33,4 +33,9 @@ def handle_connect(message):
 def handle_new_message(message):
     logging.info("new handle_new_message: %s, %s", message, current_user.username)
     message = controller.new_message(message)
+
+    user = message.user.fetch().to_dict()
+    message = message.to_dict()
+    message["user"] = user
+
     emit("add_to_history", json.dumps(message), broadcast=True)
