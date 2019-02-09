@@ -17,7 +17,7 @@ pipenv install --dev
 Run tests:
 
 ```
-pipenv run pytest
+pipenv run pytest tests.py
 ```
 
 Run server:
@@ -27,6 +27,15 @@ pipenv run python server.py
 ```
 
 Server will be runned at 127.0.0.1:8000
+
+Run server under docker-compose:
+
+```
+docker-compose up
+```
+
+In this case server will be runned at 0.0.0.0:80.
+
 
 ## Changelog
 
@@ -53,3 +62,8 @@ Server will be runned at 127.0.0.1:8000
 * Add docker-compose with multiserver environment
 * Add rabbitmq for correct multiserver support (see https://flask-socketio.readthedocs.io/en/latest/#using-multiple-workers)
 * Add nginx frontend with 3 servers in upstream
+
+### Version version-4
+
+* Bugfix: display name in socket add_to_history event
+* More docs
