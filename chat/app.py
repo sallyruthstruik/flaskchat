@@ -18,9 +18,26 @@ app = Flask(__name__)
 
 
 class ChatJsonEncoder(JSONEncoder):
+    """
+    I don't want to care about serialization ObjectId, datetime and so one,
+    so override default flask json encoder.
 
+    So to get full functionality you should use::
+
+        >>> from flask import json
+
+    instead of standart json module.
+
+    .. note::
+
+        This serializer can serialize (in addition to standart types):
+
+        * ObjectId items
+        * ModelMixins which declares to_dict field
+        * datetime, date
+
+    """
     def default(self, o):
-        # import ipdb;ipdb.set_trace()
         if isinstance(o, ModelMixin):
             return o.to_dict()
         if isinstance(o, ObjectId):

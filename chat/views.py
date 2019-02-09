@@ -1,4 +1,3 @@
-from flask.globals import request
 from flask.helpers import url_for
 from flask.templating import render_template
 from flask_login import logout_user

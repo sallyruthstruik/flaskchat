@@ -1,6 +1,8 @@
 
 class ChatException(Exception):
-    pass
+    """
+    Base exception class for all project exceptions
+    """
 
 
 class ResponseException(ChatException):
