@@ -12,6 +12,8 @@ flask-login = "*"
 flask-socketio = "*"
 gevent = "*"
 gevent-websocket = "*"
+uwsgi = "*"
+kombu = "*"
 
 [requires]
 python_version = "3.6"

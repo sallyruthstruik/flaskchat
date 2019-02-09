@@ -46,3 +46,10 @@ Server will be runned at 127.0.0.1:8000
 * Changed development server to socketio
 * New client with VueJS framework
 * Client now supports realtime updates
+
+### Version version-3
+
+* Add Docker environment. In docker server is runned using uWSGI + gevent + monkey-patching
+* Add docker-compose with multiserver environment
+* Add rabbitmq for correct multiserver support (see https://flask-socketio.readthedocs.io/en/latest/#using-multiple-workers)
+* Add nginx frontend with 3 servers in upstream

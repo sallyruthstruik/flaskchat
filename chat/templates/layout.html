@@ -21,7 +21,18 @@
 </head>
 <body>
   <div class="container">
-    <h3>Hello, {{current_user.username}}!</h3>
+    {% if current_user.is_authenticated %}
+        <div class="row">
+            <div class="col-sm-2">
+                <h3>Hello, {{current_user.username}}!</h3>
+            </div>
+            <div class="col-sm">
+                <form method="post" action="{{ url_for('logout') }}">
+                    <span><button type="submit" class="btn btn-warning">Logout</button></span>
+                </form>
+            </div>
+        </div>
+    {% endif %}
     {% block content %}{% endblock %}
   </div>
 

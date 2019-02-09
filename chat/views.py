@@ -1,6 +1,7 @@
 from flask.globals import request
 from flask.helpers import url_for
 from flask.templating import render_template
+from flask_login import logout_user
 from flask_login.utils import login_required
 from flask import globals as g, redirect, jsonify
 
@@ -27,6 +28,12 @@ def login():
             error = e
 
     return render_template("login.html", error=error)
+
+
+@app.route("/logout", methods=["POST"])
+def logout():
+    logout_user()
+    return redirect(url_for("login"))
 
 
 @app.route("/chat", methods=["GET"])

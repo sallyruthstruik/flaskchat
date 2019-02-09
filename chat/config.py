@@ -11,6 +11,11 @@ class BaseConfig:
         "db": "chat",
     }
 
+    # connection string to rabbitmq.
+    # It's needed for correct message broadcasting,
+    # see https://flask-socketio.readthedocs.io/en/latest/#using-multiple-workers.
+    SOCKETIO_QUEUE = "amqp://"
+
 
 class Development(BaseConfig):
     DEBUG = True
@@ -24,3 +29,15 @@ class Testing(BaseConfig):
         "host": "localhost",
         "db": "chat_test",
     }
+
+
+class Docker(BaseConfig):
+    DEBUG = False
+    Testing = False
+
+    MONGODB_SETTINGS = {
+        "host": "mongo",
+        "db": "chat",
+    }
+
+    SOCKETIO_QUEUE = "amqp://rabbit"

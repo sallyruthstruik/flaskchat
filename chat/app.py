@@ -1,8 +1,10 @@
 import datetime
 import logging
 import os
+from logging import StreamHandler
 
 import mongoengine
+import sys
 from bson import ObjectId
 from flask.app import Flask
 from flask.json import JSONEncoder
@@ -37,7 +39,7 @@ def get_app(config_name="chat.config.Development")-> Flask:
     app.template_folder = "templates"
 
     db.init_app(app)
-    socketio.init_app(app)
+    socketio.init_app(app, message_queue=app.config["SOCKETIO_QUEUE"])
     login_manager.init_app(app)
 
     app.json_encoder = ChatJsonEncoder
@@ -48,6 +50,9 @@ def get_app(config_name="chat.config.Development")-> Flask:
     logging.basicConfig(
         level=app.config["LOGLEVEL"],
         format="%(asctime)s [%(levelname)s][%(name)s] %(message)s",
+        handlers=[
+            StreamHandler(stream=sys.stderr)
+        ]
     )
     logging.info("Created new server!")
 
